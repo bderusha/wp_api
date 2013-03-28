@@ -2,7 +2,7 @@ module WpApi
 	module Api
 		module Post
 			def getPost(post_id, fields = [])
-	      return_fields = self.merge_fields_with_default_post_fields(fields)
+	      return_fields = merge_fields_with_default_post_fields(fields)
 				@connection.call('wp.getPost', @blog_id, @wp_username, @wp_password, post_id, return_fields)
 			end
 
@@ -16,7 +16,7 @@ module WpApi
 	        :order => 'asc',
 	      }.merge(filter)
 
-	      return_fields = self.merge_fields_with_default_post_fields(fields)
+	      return_fields = merge_fields_with_default_post_fields(fields)
 				@connection.call('wp.getPosts', @blog_id, @wp_username, @wp_password, filter, return_fields)
 			end
 
@@ -54,8 +54,6 @@ module WpApi
 			end
 
 
-
-			private
 			def merge_fields_with_default_post_fields(fields)
 				[:post_id, :post_title, :post_date, :post_author, :post_content] | fields.map{|e| e.to_sym}
 			end
