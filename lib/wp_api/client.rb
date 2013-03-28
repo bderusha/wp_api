@@ -7,7 +7,7 @@ module WpApi
 
     DEFAULT_OPTIONS = {
         :host       => nil,
-        :path       => '/xmlrpc.php',
+        :path       => 'xmlrpc.php',
         :port       => 80,
         :proxy_host => nil,
         :proxy_port => nil,
@@ -26,8 +26,12 @@ module WpApi
       opts = DEFAULT_OPTIONS
       opts.merge!(options)
 
-      self.host          = opts[:host]
-      self.path          = opts[:path]
+      host = opts[:host].gsub('http://','').split('/')
+      path = "/"+(host[1..-1]+[opts[:path]]).join('/')
+
+
+      self.host          = host[0]
+      self.path          = path
       self.port          = opts[:port]
       self.proxy_host    = opts[:proxy_host]
       self.proxy_port    = opts[:proxy_port]
